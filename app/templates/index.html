@@ -57,7 +57,7 @@
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <div class="container">
       <a class="navbar-brand mx-auto" href="#">Translator Service</a>
       <div class="navbar-text text-light">
@@ -91,12 +91,23 @@
     async function translateText() {
       // Extract the text and languages from the form
       var text_for_translation = document.getElementById('text').value;
-      var languages_chosen = document.getElementById('languages').value;
+      var languages_input = document.getElementById('languages').value;
+      var languages_raw = languages_input.split(',');
+      var languages_array = [];
+      
+      for (let i = 0; i < languages_raw.length; i++) {
+        let lang = languages_raw[i].trim();
+        if (lang) {  // Only add non-empty strings
+          languages_array.push(lang);
+        }
+      }
+      
+      console.log("Languages array:", languages_array);
 
       // Prepare the payload
       var payload = {
         text: text_for_translation,
-        languages: languages_chosen
+        languages: languages_array
       };
 
       try {
